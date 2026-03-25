@@ -60,3 +60,49 @@ body {
   transform: translate(-50%, 0) !important;
 }
 
+/* Smooth Transition for Theme Change */
+body {
+  transition: background-color 0.8s ease, color 0.8s ease;
+}
+
+/* --- Light Mode Styles --- */
+body.light-mode {
+  background-color: #f8fafc; /* Light background */
+  color: #0f172a; /* Dark text */
+}
+
+/* Update Glass Effect for Light Mode */
+body.light-mode .glass {
+  background: rgba(0, 0, 0, 0.03);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+/* Override Tailwind hardcoded colors for Light Mode */
+body.light-mode .text-white {
+  color: #0f172a !important;
+}
+
+body.light-mode .text-gray-400,
+body.light-mode .text-gray-500 {
+  color: #475569 !important;
+}
+
+body.light-mode .bg-white\/5 {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode .border-white\/10,
+body.light-mode .border-white\/5 {
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+body.light-mode .text-white\/10 {
+  color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Theme Change Smooth Transition for all elements */
+body, .glass, [class*="bg-white"], [class*="text-"], [class*="border-"], i {
+  transition: background-color 0.8s ease-in-out, color 0.8s ease-in-out, background 0.8s ease-in-out, border-color 0.8s ease-in-out !important;
+}
+
