@@ -1,0 +1,75 @@
+body {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  background-color: #020408;
+  color: white;
+  scroll-behavior: smooth;
+}
+.glass {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* Lamp Swing */
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+.lamp-swing {
+  transform-origin: top center;
+  animation: swing 4.5s ease-in-out infinite;
+}
+
+/* Pulsing Hint Animation */
+@keyframes pulse-hint {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1) translateX(0);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05) translateX(10px);
+  }
+}
+.hint-animation {
+  animation: pulse-hint 2s ease-in-out infinite;
+}
+
+/* Content Reveal */
+.dimmed {
+  opacity: 0.03;
+  filter: blur(8px) grayscale(1);
+  transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+}
+.illuminated {
+  opacity: 1;
+  filter: blur(0) grayscale(0);
+  pointer-events: auto;
+}
+
+#glow-beam {
+  clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
+  background: radial-gradient(
+    circle at top,
+    rgba(234, 179, 8, 0.15),
+    transparent 85%
+  );
+  filter: blur(50px);
+}
+
+.project-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(234, 179, 8, 0.3);
+}
+.toast-visible {
+  opacity: 1 !important;
+  transform: translate(-50%, 0) !important;
+}
+

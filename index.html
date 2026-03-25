@@ -4,37 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tanbir Hasan | Software Engineer</title>
+    <link rel="stylesheet" href="style.css" />
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020408; color: white; scroll-behavior: smooth; }
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        
-        /* Lamp Swing */
-        @keyframes swing { 0%, 100% { transform: rotate(0deg); } 50% { transform: rotate(6deg); } }
-        .lamp-swing { transform-origin: top center; animation: swing 4.5s ease-in-out infinite; }
-
-        /* Pulsing Hint Animation */
-        @keyframes pulse-hint {
-            0%, 100% { opacity: 0.4; transform: scale(1) translateX(0); }
-            50% { opacity: 1; transform: scale(1.05) translateX(10px); }
-        }
-        .hint-animation { animation: pulse-hint 2s ease-in-out infinite; }
-
-        /* Content Reveal */
-        .dimmed { opacity: 0.03; filter: blur(8px) grayscale(1); transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1); pointer-events: none; }
-        .illuminated { opacity: 1; filter: blur(0) grayscale(0); pointer-events: auto; }
-        
-        #glow-beam { 
-            clip-path: polygon(10% 0%, 90% 0%, 100% 100%, 0% 100%);
-            background: radial-gradient(circle at top, rgba(234, 179, 8, 0.15), transparent 85%);
-            filter: blur(50px);
-        }
-
-        .project-card:hover { transform: translateY(-8px); border-color: rgba(234, 179, 8, 0.3); }
-        .toast-visible { opacity: 1 !important; transform: translate(-50%, 0) !important; }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"> 
 </head>
 <body class="overflow-x-hidden">
 
@@ -113,7 +86,7 @@
                     <div class="grid grid-cols-2 gap-6">
                         <div class="bg-white/5 p-5 rounded-3xl border border-white/5">
                             <span class="block text-[10px] text-gray-500 uppercase font-bold mb-1">Joined NUB</span>
-                            <span class="text-lg font-bold">Late 2023</span>
+                            <span class="text-lg font-bold">January 2023</span>
                         </div>
                         <div class="bg-white/5 p-5 rounded-3xl border border-white/5">
                             <span class="block text-[10px] text-gray-500 uppercase font-bold mb-1">Graduation</span>
@@ -236,76 +209,6 @@
         </footer>
     </div>
 
-    <script>
-        const cord = document.getElementById('pull-cord');
-        const beam = document.getElementById('glow-beam');
-        const shade = document.getElementById('lamp-shade');
-        const mouth = document.getElementById('lamp-mouth');
-        const content = document.getElementById('main-content');
-        const toast = document.getElementById('light-toast');
-        const hint = document.getElementById('lamp-hint'); // New Hint Element
-        
-        let isOn = false;
-
-        cord.addEventListener('mousedown', () => {
-            cord.classList.remove('lamp-swing');
-            cord.style.transform = 'translateY(35px)';
-        });
-
-        window.addEventListener('mouseup', () => {
-            if (cord.style.transform === 'translateY(35px)') {
-                cord.style.transform = 'translateY(0px)';
-                setTimeout(() => cord.classList.add('lamp-swing'), 100);
-                toggleApp();
-            }
-        });
-
-        function toggleApp() {
-            isOn = !isOn;
-            if (isOn) {
-                beam.style.opacity = "1";
-                shade.setAttribute('fill', '#d4e09b');
-                mouth.setAttribute('d', "M90 85 Q100 100 110 85"); // Smile
-                mouth.setAttribute('stroke', '#ff4d4d');
-                content.classList.remove('dimmed');
-                content.classList.add('illuminated');
-                
-                // Show Alert, Hide Hint
-                toast.classList.add('toast-visible');
-                hint.style.display = "none";
-                setTimeout(() => { toast.classList.remove('toast-visible'); }, 4000);
-
-                fetchCF();
-            } else {
-                beam.style.opacity = "0";
-                shade.setAttribute('fill', '#181d14');
-                mouth.setAttribute('d', "M90 95 Q100 85 110 95"); // Sad
-                mouth.setAttribute('stroke', '#000');
-                content.classList.add('dimmed');
-                content.classList.remove('illuminated');
-                
-                // Hide Alert, Show Hint
-                toast.classList.remove('toast-visible');
-                hint.style.display = "block";
-            }
-        }
-
-        async function fetchCF() {
-            try {
-                const resUser = await fetch('https://codeforces.com/api/user.info?handles=Tanbir_hasan');
-                const dataUser = await resUser.json();
-                const resStatus = await fetch('https://codeforces.com/api/user.status?handle=Tanbir_hasan');
-                const dataStatus = await resStatus.json();
-                if(dataUser.status === "OK") {
-                    document.getElementById('cf-rating').innerText = dataUser.result[0].rating || 'Unrated';
-                    document.getElementById('cf-max').innerText = dataUser.result[0].maxRating || '--';
-                }
-                if(dataStatus.status === "OK") {
-                    const solved = new Set(dataStatus.result.filter(s => s.verdict === "OK").map(s => s.problem.name));
-                    document.getElementById('cf-solved').innerText = solved.size;
-                }
-            } catch (e) { console.error("API error"); }
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
