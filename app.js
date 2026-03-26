@@ -133,13 +133,14 @@ function updateActiveLink() {
 
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 250) {
+        if (window.scrollY >= sectionTop - 250) {
             current = section.getAttribute('id');
         }
     });
 
     navLinks.forEach(link => {
         link.classList.remove('text-yellow-500');
+        
         if (link.getAttribute('href') === `#${current}`) {
             link.classList.add('text-yellow-500');
         }
@@ -148,39 +149,3 @@ function updateActiveLink() {
 
 window.addEventListener('scroll', updateActiveLink);
 window.addEventListener('load', updateActiveLink);
-
-// --- 4. Auto Typing Effect Logic ---
-const typingText = document.getElementById("typing-text");
-const words = ["Full-stack Developer.", "CP Enthusiast.", "Problem Solver."];
-let wordIndex = 0;
-let charIndex = 0;
-let isDeleting = false;
-
-function typeEffect() {
-    if (!typingText) return;
-
-    const currentWord = words[wordIndex];
-
-    if (isDeleting) {
-        typingText.innerText = currentWord.substring(0, charIndex - 1);
-        charIndex--;
-    } else {
-        typingText.innerText = currentWord.substring(0, charIndex + 1);
-        charIndex++;
-    }
-
-    let typeSpeed = isDeleting ? 50 : 100;
-
-    if (!isDeleting && charIndex === currentWord.length) {
-        typeSpeed = 2000;
-        isDeleting = true;
-    } else if (isDeleting && charIndex === 0) {
-        isDeleting = false;
-        wordIndex = (wordIndex + 1) % words.length;
-        typeSpeed = 500;
-    }
-
-    setTimeout(typeEffect, typeSpeed);
-}
-
-document.addEventListener("DOMContentLoaded", typeEffect);
