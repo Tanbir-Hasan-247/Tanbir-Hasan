@@ -149,3 +149,62 @@ function updateActiveLink() {
 
 window.addEventListener('scroll', updateActiveLink);
 window.addEventListener('load', updateActiveLink);
+
+// --- 4. View All Toggle Logic (Projects & Thesis) ---
+function setupViewMore(itemClass, btnId, limit) {
+    const items = document.querySelectorAll(itemClass);
+    const btn = document.getElementById(btnId);
+
+    if (!btn || items.length === 0) return;
+
+    // Check if total items are less than or equal to the limit
+    if (items.length <= limit) {
+        btn.style.display = 'none'; // Hide button if not needed
+        return;
+    }
+
+    // Initially hide items beyond the limit
+    items.forEach((item, index) => {
+        if (index >= limit) {
+            item.style.display = 'none';
+            item.style.opacity = '0';
+        }
+    });
+
+    let isExpanded = false;
+
+    btn.addEventListener('click', () => {
+        isExpanded = !isExpanded;
+
+        if (isExpanded) {
+            let delay = 0;
+            items.forEach((item, index) => {
+                if (index >= limit) {
+                    item.style.display = 'flex'; // Show in DOM
+                    // Staggered animation (একের পর এক আসবে)
+                    setTimeout(() => {
+                        item.style.opacity = '1';
+                    }, delay);
+                    delay += 300; // 300ms পর পর আসবে
+                }
+            });
+            btn.innerText = 'View Less';
+        } else {
+            items.forEach((item, index) => {
+                if (index >= limit) {
+                    item.style.opacity = '0'; // Fade out
+                    setTimeout(() => {
+                        item.style.display = 'none'; // Remove from DOM after fade
+                    }, 500); 
+                }
+            });
+            btn.innerText = btnId === 'view-projects-btn' ? 'View All Projects' : 'View All Research';
+        }
+    });
+}
+
+// প্রজেক্টের জন্য ইনিশিয়াল লিমিট ২
+setupViewMore('.project-item', 'view-projects-btn', 2);
+
+// থিসিসের জন্য ইনিশিয়াল লিমিট ১
+setupViewMore('.thesis-item', 'view-thesis-btn', 1);
